@@ -36,11 +36,13 @@ function createArrayOfObjects(sizeOfData){
     }
     return data
 }
-function binaryTree(bst,data){
+module.exports =binaryTree()
+function binaryTree(BST,data){
     const binaryTree={}
-    const tree={...bst}
+    const tree={...BST}
     binaryTree.add=add
-    function add(bst,data){
+    binaryTree.search=search
+    function add(BST,data){
         insert(tree,data.id)
         function insert(root,value){
             if(!!root.value){
@@ -56,6 +58,15 @@ function binaryTree(bst,data){
             }
         }
     }
+    function search(BST,data){
+            return recursiveSearch(tree,data)
+        function recursiveSearch(root,value){
+            if(!root.value||root.value.id==value.id){return root.value}
+            if(root.value.id>value.id){ return recursiveSearch(root.left,value)}
+            return recursiveSearch(root.right,value)
+        }
+                
+    }
     binaryTree.data=tree
     return binaryTree
 }
@@ -67,32 +78,8 @@ function setDataToTree(data){
     data.slice(rootIndex+1,data.length).forEach((item,index)=>tree.add(tree,item))
 }
 setDataToTree(data)
-// console.log(tree.data.right,'valor final')
-const jsondata=JSON.stringify(tree.data)
-console.log(jsondata)
-
-// TEST
-// mocha.setup("bdd");
-// const { assert } = chai;
-
-// describe("Binary Search Tree", () => {
-//     it("Should insert node", () => {
-//         const root = new Node(2);
-//         root.insert(1);
-//         root.insert(3);
-//         root.insert(0);
-//         assert.equal(root.left.left.data, 0);
-//     });
-
-//     it("Should implement search", () => {
-//         const root = new Node(2);
-//         root.insert(1);
-//         root.insert(3);
-//         root.insert(0);
-//         assert.equal(root.search(3).data, 3);
-//         assert.equal(root.search(4), null);
-//     });
-// });
-
-// mocha.run();
+// console.log(tree.data,'valor final')
+console.log(tree.search(tree,{id:1}),'valor final')
+// const jsondata=JSON.stringify(tree.data)
+// console.log(jsondata)
 
